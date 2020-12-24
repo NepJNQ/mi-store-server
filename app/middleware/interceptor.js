@@ -1,9 +1,11 @@
 /*
- * @Description: 后端拦截器，判断token
+ * @Description: 后端拦截器
  * @Author: Nep
  * @Date: 2020-12-24 11:42:55
  * @LastEditTime: 2020-12-24 12:00:50
  */
+
+// 拦截
 const jwt = require("jsonwebtoken");
 module.exports = {
   setToken: (payload) => {

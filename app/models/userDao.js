@@ -2,18 +2,13 @@
  * @Description: users持久层
  * @Author: Nep
  * @Date: 2020-12-17 18:57:59
- * @LastEditTime: 2020-12-23 18:58:20
+ * @LastEditTime: 2020-12-24 19:19:58
  */
 const db = require("./db");
 
 module.exports = {
-  // 查询所有用户
-  getAllUser: async () => {
-    const sql = "select * from users";
-    return await db.query(sql);
-  },
   // 查询用户名称
-  getUserByName: async (username) => {
+  getUidByName: async (username) => {
     const sql = "select user_id from users where username = ?";
     return await db.query(sql, [username]);
   },

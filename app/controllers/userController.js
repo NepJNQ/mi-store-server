@@ -2,7 +2,7 @@
  * @Description: user控制层
  * @Author: Nep
  * @Date: 2020-12-17 19:11:24
- * @LastEditTime: 2020-12-24 12:48:29
+ * @LastEditTime: 2020-12-24 19:24:08
  */
 const userDao = require("../models/userDao");
 const ApiError = require("../middleware/error/api_error");
@@ -15,22 +15,13 @@ module.exports = {
    * @description: 根据username查找用户id是否存在
    * @param {Object} ctx
    */
-  ifNameExist: async (ctx) => {
+  ifNameExists: async (ctx) => {
     let username = ctx.query.username;
-    let result = await userDao.getUserByName(username);
+    let result = await userDao.getUidByName(username);
     result = result.length ? true : false;
     ctx.body = {
       ifNameExists: result,
     };
-  },
-
-  /**
-   * @description: 根据username查找完整用户
-   * @param {Object} ctx
-   */
-  getUserByName: async (ctx) => {
-    let username = ctx.query.username;
-    ctx.body = await userDao.getUserByName(username);
   },
 
   /**
@@ -52,7 +43,7 @@ module.exports = {
       username: user[0].userName,
     };
     const token = setToken(user);
-    ctx.data = {
+    ctx.body = {
       user: token,
     };
   },
@@ -68,9 +59,9 @@ module.exports = {
     // 先校验信息格式
     checkUserInfo(username, password);
     // 检查是否已经存在该名称用户
-    let user = await userDao.getUserByName(username);
+    let user = await userDao.getUidByName(username);
     if (user.length) {
-      throw new ApiError(ApiErrorNames.ALREADY_EXIST);
+      throw new ApiError(ApiErrorNames.ALREADY_EXIST,"注册失败，用户名已存在");
     }
 
     // 正式注册

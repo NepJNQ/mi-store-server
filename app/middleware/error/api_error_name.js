@@ -7,12 +7,10 @@
 
 const ApiErrorNames = {
   NOT_FOUND: "not_found",
-  UNKNOW_ERROR: "unknow_error",
   ALREADY_EXIST: "already_exist",
   UNEXIST: "unexist",
   ILLEGAL_FORMAT: "illegal_format",
   LEGAL_ID: "legal_id",
-  LEGAL_FILE_TYPE: "legal_file_type",
   NO_AUTH: "no_auth",
 };
 
