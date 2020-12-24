@@ -2,7 +2,7 @@
  * @Description: user控制层
  * @Author: Nep
  * @Date: 2020-12-17 19:11:24
- * @LastEditTime: 2020-12-24 19:24:08
+ * @LastEditTime: 2020-12-24 21:09:46
  */
 const userDao = require("../models/userDao");
 const ApiError = require("../middleware/error/api_error");
@@ -44,7 +44,8 @@ module.exports = {
     };
     const token = setToken(user);
     ctx.body = {
-      user: token,
+      user: user,
+      token: token,
     };
   },
 
@@ -61,7 +62,7 @@ module.exports = {
     // 检查是否已经存在该名称用户
     let user = await userDao.getUidByName(username);
     if (user.length) {
-      throw new ApiError(ApiErrorNames.ALREADY_EXIST,"注册失败，用户名已存在");
+      throw new ApiError(ApiErrorNames.ALREADY_EXIST, "注册失败，用户名已存在");
     }
 
     // 正式注册
