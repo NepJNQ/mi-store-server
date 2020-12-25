@@ -2,7 +2,7 @@
  * @Description:
  * @Author: Nep
  * @Date: 2020-12-17 18:51:29
- * @LastEditTime: 2020-12-24 20:31:02
+ * @LastEditTime: 2020-12-25 22:33:58
  */
 // 格式化响应结果
 
@@ -27,7 +27,8 @@ const restify = (pathPrefix) => async (ctx, next) => {
       // 错误捕获：分为三类
     } catch (error) {
       // ApiError
-      // 可能来自路由失配或下层Controlller抛出，将错误信息添加到响应体中返回
+      // 可能来自：路由失配或下层Controlller抛出，
+      // 处理：将错误信息添加到响应体中返回，前端状态码依旧为200
       if (error instanceof ApiError) {
         ctx.body = {
           code: error.code,
@@ -35,12 +36,12 @@ const restify = (pathPrefix) => async (ctx, next) => {
         };
         // 401错误：专门处理koa-jwt鉴权报错
       } else if (error.status == 401) {
-        ctx.status = 401;
         ctx.body = {
-          code: error.name,
-          message: error.message,
+          code: "401",
+          message: "请登录后操作",
         };
         // 其余类型错误(sql错误等)
+        // 处理：将错误信息添加到响应体中返回，前端状态码变成400
       } else {
         ctx.status = 400;
         ctx.body = {

@@ -2,8 +2,10 @@
  * @Description: 收藏控制层
  * @Author: Nep
  * @Date: 2020-12-24 14:19:48
- * @LastEditTime: 2020-12-24 23:46:55
+ * @LastEditTime: 2020-12-25 19:49:42
  */
+const ApiError = require("../middleware/error/api_error");
+const ApiErrorNames = require("../middleware/error/api_error_name");
 const collectDao = require("../models/collectDao");
 const productDao = require("../models/productDao");
 
@@ -28,19 +30,14 @@ module.exports = {
     ctx.body = collectList;
   },
   /**
-   * @description: 查询单个商品是否在用户收藏
-   * @param {Object} ctx
-   */
-  findCollect: async (ctx) => {
-    let { uid, pid } = ctx.request.body;
-    ctx.body = await collectDao.findCollect(uid, pid);
-  },
-  /**
    * @description: 添加收藏
    * @param {Object} ctx
    */
   addCollect: async (ctx) => {
     let { uid, pid } = ctx.request.body;
+    const exists = await collectDao.findCollect(uid, pid);
+    if (exists.length)
+      throw new ApiError(ApiErrorNames.ALREADY_EXIST, "已经在收藏中了!");
     const timeTemp = new Date().getTime();
     ctx.body = await collectDao.addCollect(uid, pid, timeTemp);
   },
