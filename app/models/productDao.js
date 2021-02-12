@@ -20,10 +20,10 @@ module.exports = {
     return category[0].category_id;
   },
 
-  //根据分类id获取首页产品信息,获取类别下销量排名前7的产品
+  //根据分类id获取首页产品信息,获取类别下销量排名前8的产品
   getHomeProduct: async (categoryId) => {
     const sql =
-      "select * from product where category_id = ? order by product_sales desc limit 7";
+      "select * from product where category_id = ? order by product_sales desc limit 8";
     return await db.query(sql, categoryId);
   },
 

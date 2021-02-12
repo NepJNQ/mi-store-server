@@ -46,7 +46,7 @@ module.exports = {
         cids.push(cid);
       });
     }
-    ctx.body = await productDao.getProductByCategoryId(cids, 0, 7);
+    ctx.body = await productDao.getProductByCategoryId(cids, 0, 8);
   },
 
   /**

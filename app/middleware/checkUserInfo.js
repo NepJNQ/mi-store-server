@@ -18,7 +18,7 @@ module.exports = {
     if (!username.length || !password.length)
       throw new ApiError(
         ApiErrorNames.ILLEGAL_FORMAT,
-        "注册失败，用户名和密码不能为空"
+        "操作失败，用户名和密码不能为空"
       );
     // 校验规则
     const usernameRule = /^[a-zA-Z][a-zA-Z0-9_]{5,15}$/;
@@ -26,14 +26,14 @@ module.exports = {
     if (!usernameRule.test(username)) {
       throw new ApiError(
         ApiErrorNames.ILLEGAL_FORMAT,
-        "注册失败，用户名不合法（字母开头，6-16位，允许字母、数字、下划线）"
+        "操作失败，用户名不合法（字母开头，6-16位，允许字母、数字、下划线）"
       );
     }
 
     if (!passwordRule.test(password)) {
       throw new ApiError(
         ApiErrorNames.ILLEGAL_FORMAT,
-        "注册失败，密码不合法（6-16位字母、数字、下划线组合）"
+        "操作失败，密码不合法（6-16位字母、数字、下划线组合）"
       );
     }
   },

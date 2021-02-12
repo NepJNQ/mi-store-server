@@ -1,11 +1,9 @@
 /*
- * @Description:
+ * @Description:格式化响应结果
  * @Author: Nep
  * @Date: 2020-12-17 18:51:29
  * @LastEditTime: 2020-12-25 22:33:58
  */
-// 格式化响应结果
-
 const ApiError = require("./error/api_error");
 const ApiErrorNames = require("./error/api_error_name");
 
@@ -27,7 +25,7 @@ const restify = (pathPrefix) => async (ctx, next) => {
       // 错误捕获：分为三类
     } catch (error) {
       // ApiError
-      // 可能来自：路由失配或下层Controlller抛出，
+      // 可能来自：路由失配或下层Controller抛出，
       // 处理：将错误信息添加到响应体中返回，前端状态码依旧为200
       if (error instanceof ApiError) {
         ctx.body = {

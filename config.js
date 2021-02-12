@@ -42,31 +42,6 @@ module.exports = {
     whitelist: [/^\/api\/user/, /^\/api\/resource/, /^\/api\/product/],
   },
 
-  // session配置
-  sessionConfig: {
-    // 默认cookies存储
-    key: "koa:session",
-    maxAge: 86400000, // cookie有效期
-    overwrite: true,
-    httpOnly: true, // 是否可以通过JS修改cookie，防止XSS
-    signed: true,
-    rolling: false, // 更新策略
-    renew: false, // 更新策略
-    // 外部存储session
-    store: {
-      storage: {},
-      get(key) {
-        return this.storage[key];
-      },
-      set(key, session) {
-        this.storage[key] = session;
-      },
-      destroy(key) {
-        delete this.storage[key];
-      },
-    },
-  },
-
   // 数据库连接设置
   dbConfig: {
     connectionLimit: 10,

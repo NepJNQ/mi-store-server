@@ -5,18 +5,15 @@
  * @LastEditTime: 2020-12-24 23:33:52
  */
 const Koa = require("koa");
-const koaBody = require("koa-body");
-const cors = require("koa2-cors");
-const Session = require("koa-session");
-
 let { port, pathPrefix, staticDir } = require("./config");
-let { koaBodyConfig, sessionCofig, koajwtConfig } = require("./config");
+let { koaBodyConfig, koajwtConfig } = require("./config");
 const app = new Koa();
 
 // cors中间件
+const cors = require("koa2-cors");
 app.use(cors());
 
-// 响应 RESTful 中间件(含错误处理)
+// 响应格式化中间件(含错误处理)
 const restify = require("./app/middleware/rest");
 app.use(restify(pathPrefix));
 
@@ -24,11 +21,8 @@ app.use(restify(pathPrefix));
 const KoaStatic = require("koa-static");
 app.use(KoaStatic(staticDir));
 
-// session中间件
-app.keys = ["session app keys"]; // 不设置keys会报错
-app.use(Session(sessionCofig, app));
-
 // 请求体处理中间件
+const koaBody = require("koa-body");
 app.use(koaBody(koaBodyConfig));
 
 // 注册拦截器
