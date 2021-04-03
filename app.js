@@ -9,17 +9,21 @@ let { port, pathPrefix, staticDir } = require("./config");
 let { koaBodyConfig, koajwtConfig } = require("./config");
 const app = new Koa();
 
+// 响应格式化中间件(含错误处理)
+const formatter = require("./app/middleware/formatter");
+app.use(formatter(pathPrefix));
+
 // cors中间件
 const cors = require("koa2-cors");
 app.use(cors());
 
-// 响应格式化中间件(含错误处理)
-const restify = require("./app/middleware/rest");
-app.use(restify(pathPrefix));
-
 // 静态资源处理中间件
 const KoaStatic = require("koa-static");
-app.use(KoaStatic(staticDir));
+app.use(
+  KoaStatic(staticDir, {
+    maxage: 1000 * 1000,
+  })
+);
 
 // 请求体处理中间件
 const koaBody = require("koa-body");
